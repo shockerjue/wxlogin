@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package wxlogin; 
+
+// RPC接口
+service WxLogin {
+  rpc OnLogin (LoginRequest) returns (LoginReply) {}
+  rpc OnSignup (SignupRequest) returns (SignupReply) {}
+  rpc OnHeart (HeartRequest) returns (HeartReply) {}
+}
+
+// 登录和注册的响应信息
+message ReplyInfo {
+    string      token   = 1;
+}
+
+// 登录请求结构
+message LoginRequest {
+    string      account = 1;
+    string      pass    = 2;
+    string      mac     = 3;
+    string      device  = 4;
+    string      ostype  = 5;
+    string      sign    = 6;
+}
+
+// 登录响应结构
+message LoginReply {
+    int32       status  = 1;
+    string      message = 2;
+    ReplyInfo            info    = 3;
+    string               sign    = 4;
+}
+
+// 注册请求结构
+message SignupRequest {
+    string      account = 1;
+    string      name    = 2;
+    string      pass    = 3;
+    string      mac     = 4;
+    string      device  = 5;
+    string      ostype  = 6;
+    string      email   = 7;
+    string      tel     = 8;
+    string      sign    = 9;
+}
+
+// 注册响应结构
+message SignupReply {
+    int32       status  = 1;
+    string      message = 2;
+    ReplyInfo   info    = 3;
+    string      sign    = 4;
+}
+
+// 心跳包请求
+message HeartRequest {
+    string      account = 1;
+    string      mac     = 2;
+    string      token   = 3;
+}
+
+// 用户动态消息体
+message MsgItem {
+    string      sndName = 1;
+    string      message = 2;
+    string      sndTime = 3;
+    int32       msgType = 4;
+}
+
+// 心跳包响应
+message HeartReply {
+    int32               status  = 1;
+    string              message = 2;
+    repeated MsgItem    msgs    = 3;
+}
